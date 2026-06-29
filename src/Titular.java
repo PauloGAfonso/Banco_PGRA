@@ -20,6 +20,10 @@ public class Titular {
         nomes.add(nome);
     }
 
+    public void getPosicionNomes(){
+        
+    }
+
     public String getcpfs(String cpf){
         if(cpfs.contains(cpf)){
             int posicao = cpfs.indexOf(cpf);
