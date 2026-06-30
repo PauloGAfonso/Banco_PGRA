@@ -8,13 +8,20 @@ public class Main {
 
         int loop = 0;
         
-        boolean running = true;
+        boolean access = false;
+        boolean logando = false;
         
 
-        System.out.println(" SEJA BEM VINDO AO BANCO PG ");
-        System.out.println(" Aqui garantimos a sua segurança financeira ");
+        while (!logando){
+            System.out.println("Entrou!");
+            telaLogin(leitor);
+            logando = !logando;
+            
+        }
 
-        while (running) {
+
+
+        while (access) {
             
             telaInicial();
             int escolha = leitor.nextInt();
@@ -30,6 +37,8 @@ public class Main {
             }
         
         }
+
+        System.out.println("Obrigado por usar o banco PGRA");
     
         leitor.close();
     }
@@ -43,8 +52,15 @@ public class Main {
     public static void telaLogin(Scanner leitor){
         System.out.print("Informe o numero da cpf");
         String verificandoCPF = leitor.nextLine();
+        if(verificandoCPF.equalsIgnoreCase(verificandoCPF)){
+            esquecisenha();
+        }
         
 
+    }
+
+    public static void esquecisenha(){
+        System.out.println("testando");
     }
 
 }
