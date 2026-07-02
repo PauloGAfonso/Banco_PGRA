@@ -5,6 +5,7 @@ public class Titular {
     private ArrayList<String> nomes = new ArrayList<>();
     private ArrayList<String> cpfs = new ArrayList<>();
     private ArrayList<Integer> idades = new ArrayList<>();
+    private ArrayList<Integer> ID = new ArrayList<>();
     
     
     public String getNomes(String nome) {

@@ -6,6 +6,7 @@ public class Conta {
     private ArrayList<Integer> agencia = new ArrayList<>();
     private ArrayList<Integer> numConta = new ArrayList<>();
     private ArrayList<Double> saldo = new ArrayList<>();
+    private ArrayList<Integer> ID = new ArrayList<>();
 
     public void depositar(double deposito, String usuario, Scanner leitor){
         System.out.println("QUal tipo de deposito você deseja fazer? ");
