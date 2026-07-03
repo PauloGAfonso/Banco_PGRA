@@ -5,7 +5,7 @@ public class Titular {
     private ArrayList<String> nomes = new ArrayList<>();
     private ArrayList<String> cpfs = new ArrayList<>();
     private ArrayList<Integer> idades = new ArrayList<>();
-    private ArrayList<Integer> ID = new ArrayList<>();
+    private ArrayList<Integer> id = new ArrayList<>();
     
     
     public String getNomes(String nome) {
@@ -19,10 +19,7 @@ public class Titular {
 
     public void setNomes(String nome) {
         nomes.add(nome);
-    }
-
-    public void getPosicionNomes(){
-        
+        id.add(nomes.indexOf(nome));
     }
 
     public String getcpfs(String cpf){
