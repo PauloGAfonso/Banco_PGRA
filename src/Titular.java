@@ -31,6 +31,16 @@ public class Titular {
         }
     }
 
+    public boolean verificandoCpfs(String cpf){
+        boolean validado;
+        if(cpfs.contains(cpf)){
+            validado = true;
+        } else {
+            validado = false;
+        }
+
+        return validado;
+    }
     public void setCpfs(String cpf){
         cpfs.add(cpf);
     }
@@ -46,6 +56,10 @@ public class Titular {
 
     public void setIdade(int idade){
         idades.add(idade);
+    }
+
+    public int getPosition(String nome){
+        return nomes.indexOf(nome);
     }
 
 }

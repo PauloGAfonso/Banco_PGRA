@@ -72,25 +72,49 @@ public class Main {
     //definindo nome, idade e cpf
     public static boolean telaCadastro(Scanner leitor, Titular titular){
         boolean cadastrado = false;
-        while(!cadastrado){
+        boolean titularCadastrado = false;
+        while(!titularCadastrado){
+
+            //cadastrando Titular
             System.out.print("Por favor, informe seu nome: ");
             String nome = leitor.nextLine();
+            System.out.print("informe seu sobrenome: ");
+            String sobrenome = leitor.nextLine();
 
-            System.out.print("Informe o seu CPF: ");
-            String cpf = leitor.nextLine();
+            String nomeCompleto = nome + " " + sobrenome;
 
-            System.out.println("Informe sua idade: ");
+            boolean verificando;
+            String cpf;
+            do {
+                System.out.print("Informe o seu CPF: ");
+                cpf = leitor.nextLine();
+                verificando = titular.verificandoCpfs(cpf);
+                if (verificando){
+                    System.out.println("Esse cpf já foi registrado, por favor informe um cpf valido.");
+                }
+            } while (verificando);
+            
+
+            System.out.print("Informe sua idade: ");
             int idade = leitor.nextInt();
             leitor.nextLine(); // consome o enter
 
             if(nome != null && !nome.isEmpty() && cpf.length() == 11 && cpf.matches("\\d{11}") && idade >= 18){
-                titular.setNomes(nome);
+                titular.setNomes(nomeCompleto);
                 titular.setCpfs(cpf);
                 titular.setIdade(idade);
-                cadastrado = !cadastrado;
+                titularCadastrado = true;
             } else {
                 System.out.println("Informações preenchidas erroneamente, repite o passo a passo e preencha os campos corretamente.");
             }
+
+            //criando agencia e conta
+            if(titularCadastrado){
+
+            }
+
+
+
         }
 
         return cadastrado;

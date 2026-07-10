@@ -3,10 +3,25 @@ import java.util.*;
 public class Conta {
 
     private Titular titular = new Titular();
-    private ArrayList<Integer> agencia = new ArrayList<>();
-    private ArrayList<Integer> numConta = new ArrayList<>();
+    private ArrayList<String> agencia = new ArrayList<>();
+    private ArrayList<String> numConta = new ArrayList<>();
     private ArrayList<Double> saldo = new ArrayList<>();
     private ArrayList<Integer> ID = new ArrayList<>();
+    private Random random = new Random();
+
+    public void setAgencia(){
+        String ag;
+        do{
+            int numero = random.nextInt(10000);
+            int digito = random.nextInt(10);
+            ag = String.format("%04d-%d", numero, digito);
+        } while (ag.contains(ag));
+        this.agencia.add(ag);
+    }
+
+    public void setConta(){
+        
+    }
 
     public void depositar(double deposito, String usuario, Scanner leitor){
         System.out.println("QUal tipo de deposito você deseja fazer? ");
