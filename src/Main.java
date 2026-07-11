@@ -5,8 +5,7 @@ public class Main {
     public static void main(String[] args) throws Exception{
         Scanner leitor = new Scanner(System.in);
         Titular titular = new Titular();
-
-        int loop = 0;
+        Conta conta = new Conta();
         
         boolean access = false;
         boolean logando = false;
@@ -56,12 +55,23 @@ public class Main {
         return logou;
     }
 
-    public static boolean telaLogin(Scanner leitor){
-        System.out.print("Informe o numero da cpf");
+    public static boolean telaLogin(Scanner leitor, Titular titular, Conta conta){
+        System.out.print("Informe o numero do seu CPF: ");
         String verificandoCPF = leitor.nextLine();
         if(verificandoCPF.equalsIgnoreCase(verificandoCPF)){
             esquecisenha();
         }
+        
+        System.out.print("Informe a senha: ");
+        String password = leitor.nextLine();
+        boolean senhaVerificada = false;
+        do {
+
+            int validando = titular.getPosition(verificandoCPF);
+            senhaVerificada = conta.verificandoSenha(validando, password);
+            
+        } while (senhaVerificada != true);
+        
         return true;
     }
 

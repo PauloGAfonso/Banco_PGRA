@@ -41,6 +41,12 @@ public class Titular {
 
         return validado;
     }
+
+    public int getPosition(String cpf){
+        return cpfs.indexOf(cpf);
+    }
+
+
     public void setCpfs(String cpf){
         cpfs.add(cpf);
     }
@@ -56,10 +62,6 @@ public class Titular {
 
     public void setIdade(int idade){
         idades.add(idade);
-    }
-
-    public int getPosition(String nome){
-        return nomes.indexOf(nome);
     }
 
 }

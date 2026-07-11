@@ -6,7 +6,7 @@ public class Conta {
     private ArrayList<String> agencia = new ArrayList<>();
     private ArrayList<String> numConta = new ArrayList<>();
     private ArrayList<Double> saldo = new ArrayList<>();
-    private ArrayList<Integer> ID = new ArrayList<>();
+    private ArrayList<String> senha = new ArrayList<>();
     private Random random = new Random();
 
     public void setAgencia(){
@@ -44,9 +44,25 @@ public class Conta {
     
     }
 
-    public void sacar(){
-        
+    public void sacar(int saque, int posicao){
+        if(this.saldo.get(posicao) < saque){
+            
+        }
     }
+
+    public void setSenha(String senha){
+        this.senha.add(senha);
+    }
+
+    public boolean verificandoSenha(int validando, string senha){
+        if(this.senha.get(validando).equals(senha)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
 
 }
