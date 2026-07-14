@@ -1,3 +1,4 @@
+package Banco;
 import java.util.*;
 
 public class Conta {
@@ -46,7 +47,7 @@ public class Conta {
 
     public void sacar(int saque, int posicao){
         if(this.saldo.get(posicao) < saque){
-            
+            System.out.println("Operação indisponível, solicitação de saque superior ao valor disponível na conta");
         }
     }
 
@@ -54,9 +55,14 @@ public class Conta {
         this.senha.add(senha);
     }
 
-    public boolean verificandoSenha(int validando, string senha){
-        if(this.senha.get(validando).equals(senha)){
-            return true;
+    public boolean verificandoSenha(String cpf, String senha){
+        int posicao = titular.getPosition(cpf);
+        if(posicao != -1){
+            if(this.senha.get(posicao).equals(senha)){
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

@@ -1,3 +1,4 @@
+package Banco;
 import java.util.*;
 
 public class Titular {
@@ -32,14 +33,7 @@ public class Titular {
     }
 
     public boolean verificandoCpfs(String cpf){
-        boolean validado;
-        if(cpfs.contains(cpf)){
-            validado = true;
-        } else {
-            validado = false;
-        }
-
-        return validado;
+        return !cpfs.contains(cpf);
     }
 
     public int getPosition(String cpf){
@@ -49,6 +43,7 @@ public class Titular {
 
     public void setCpfs(String cpf){
         cpfs.add(cpf);
+        this.id.add(cpfs.indexOf(cpf));
     }
     
     public int getIdade(int idade){
