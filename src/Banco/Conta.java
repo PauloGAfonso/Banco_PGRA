@@ -10,14 +10,12 @@ public class Conta {
     private ArrayList<String> senha = new ArrayList<>();
     private Random random = new Random();
 
-    public void setAgencia(){
-        String ag;
-        do{
-            int numero = random.nextInt(10000);
-            int digito = random.nextInt(10);
-            ag = String.format("%04d-%d", numero, digito);
-        } while (ag.contains(ag));
-        this.agencia.add(ag);
+    public void setAgencia(String agencia){
+        this.agencia.add(agencia);
+    }
+
+    public boolean verificandoAgencia(String agencia){
+        return this.agencia.contains(agencia);
     }
 
     public void setConta(){

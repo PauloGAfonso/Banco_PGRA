@@ -1,4 +1,5 @@
 package Banco;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -7,6 +8,7 @@ public class Main {
         Scanner leitor = new Scanner(System.in);
         Titular titular = new Titular();
         Conta conta = new Conta();
+        Random random = new Random();
         
         boolean access = false;
         boolean cadastrado;
@@ -28,27 +30,31 @@ public class Main {
                     user = telaLogin(leitor, titular, conta);
                     break;
                 case 2:
-                    cadastrado = telaCadastro(leitor, titular);
+                    cadastrado = telaCadastro(leitor, titular, conta, random);
                     break;
                 case 3:
                     System.out.println("Você escolheu sair...");
+                    break;
                 default:
                     System.out.println("Opção inexistente, encerrando o programa");
                     System.exit(1);
                     break;
             }
 
-            if(user != -1){
-                access = !access;
+            if(user > -1){
+                access = true;
             } else {
                 System.out.println("não foi possível acessar sua conta...");
                 Thread.sleep(4000);
                 break;
             }
-        } while (!access);
+        } while (access = false);
 
-        while (access) {
-            
+        //pós logado
+        if(access){
+            do {
+                
+            } while (true);
         }
 
         System.out.println("Obrigado por usar o banco PGRA");
@@ -100,22 +106,32 @@ public class Main {
         return usuário;
     }
 
-    public static void esquecisenha(){
-        System.out.println("testando");
+    public static boolean telaCadastro(Scanner leitor, Titular titular, Conta conta ,Random random) throws Exception {
+        boolean titularCadastrado = false;
+        boolean agencia = false;
+        boolean account = false;
+
+        do{
+            titularCadastrado = cadastrandoUsuario(titular, leitor);
+            agencia = cadastrandoAgencia(conta, random);
+            account = cadastrandoConta(conta, random);
+        }while(!(titularCadastrado && agencia && account));
+
+        if(titularCadastrado && agencia && account){
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    //definindo nome, idade e cpf
-    public static boolean telaCadastro(Scanner leitor, Titular titular) throws Exception {
-        boolean cadastrado = false;
+    public static boolean cadastrandoUsuario(Titular titular, Scanner leitor) throws Exception{
         boolean titularCadastrado = false;
         do{
-            //cadastrando Titular
             //cadastrando nome
             System.out.print("Por favor, informe seu nome: ");
             String nome = leitor.nextLine();
             System.out.print("informe seu sobrenome: ");
             String sobrenome = leitor.nextLine();
-
             String nomeCompleto = nome + " " + sobrenome;
 
             //cadastrando CPF
@@ -125,35 +141,71 @@ public class Main {
                 System.out.print("Informe o seu CPF: ");
                 cpf = leitor.nextLine();
                 verificando = titular.verificandoCpfs(cpf);
-                if (verificando == false){
+                if (verificando == true){
                     System.out.println("Esse cpf já foi registrado, por favor informe um cpf valido.");
-                } else {
-                    verificando = true;
                 }
-            } while (verificando != true);
+            } while (verificando != false);
             
-
             //verificando Idade
             System.out.print("Informe sua idade: ");
             int idade = leitor.nextInt();
             leitor.nextLine(); // consome o enter
+            if(idade < 18){
+                System.out.println("Você não tem idade permitida para criar uma conta, encerrando o programa...");
+            }
 
-            if(nome != null && !nome.isEmpty() && cpf.length() == 11 && cpf.matches("\\d{11}") && idade >= 18){
+
+            if(nomeCompleto != null && !nomeCompleto.isEmpty() && cpf.length() == 11 && cpf.matches("\\d{11}") && idade >= 18){
                 titular.setNomes(nomeCompleto);
                 titular.setCpfs(cpf);
                 titular.setIdade(idade);
-                titularCadastrado = !titularCadastrado;
+                titularCadastrado = true;
+                System.out.println("Titular cadastrado corretamente");
+                Thread.sleep(5000);
+                limpaTela();
             } else {
                 System.out.println("Informações preenchidas erroneamente, repite o passo a passo e preencha os campos corretamente.");
                 Thread.sleep(4000);
                 limpaTela();
             }
+        } while(titularCadastrado != true);
 
-            //criando agencia e conta
-            
-        } while(!titularCadastrado != true);
-        return cadastrado;
+        return titularCadastrado;
     }
+
+    public static boolean cadastrandoAgencia(Conta conta, Random random){
+        System.out.println("Estamos criando sua agência... Aguarde uns segundos...");
+        String agencia;
+        boolean ag = false;
+        do {
+            int numero = random.nextInt(10000);
+            int digito = random.nextInt(10);
+            agencia = String.format("%04d-%d", numero, digito);
+            if (conta.verificandoAgencia(agencia)) {
+                System.out.println("Agência criada já existente, será criada uma nova, aguarde...");
+            } else {
+                conta.setAgencia(agencia);
+                ag = true;
+            }
+        } while (!ag); 
+        return ag;
+    }
+
+    public static boolean cadastrandoConta(Conta conta, Random random){
+        boolean account = false;
+        String con;
+        do {
+            
+        } while (!account);
+
+        return account;
+    }
+
+    public static void esquecisenha(){
+        System.out.println("testando");
+    }
+
+    
 
     public static void limpaTela() {
         try {
@@ -175,5 +227,5 @@ public class Main {
         }
     }
 
-
+    
 }

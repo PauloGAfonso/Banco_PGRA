@@ -33,7 +33,7 @@ public class Titular {
     }
 
     public boolean verificandoCpfs(String cpf){
-        return !cpfs.contains(cpf);
+        return cpfs.contains(cpf);
     }
 
     public int getPosition(String cpf){
