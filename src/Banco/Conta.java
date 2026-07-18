@@ -8,7 +8,6 @@ public class Conta {
     private ArrayList<String> numConta = new ArrayList<>();
     private ArrayList<Double> saldo = new ArrayList<>();
     private ArrayList<String> senha = new ArrayList<>();
-    private Random random = new Random();
 
     public void setAgencia(String agencia){
         this.agencia.add(agencia);
@@ -18,8 +17,12 @@ public class Conta {
         return this.agencia.contains(agencia);
     }
 
-    public void setConta(){
-        
+    public void setConta(String conta){
+        this.numConta.add(conta);
+    }
+
+    public boolean verificandoConta(String conta){
+        return this.numConta.contains(conta);
     }
 
     public void depositar(double deposito, String usuario, Scanner leitor){

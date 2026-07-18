@@ -11,12 +11,12 @@ public class Main {
         Random random = new Random();
         
         boolean access = false;
-        boolean cadastrado;
+        boolean cadastrado = false;
         int user = -1;
         
-
        do{
             System.out.println("Bem vindo ao Banco PGRA!");
+            Thread.sleep(3000);
             System.out.println("Digite 1 para acessar sua conta!");
             Thread.sleep(3000);
             System.out.println("Digite 2 para cadastrar sua conta.");
@@ -31,6 +31,10 @@ public class Main {
                     break;
                 case 2:
                     cadastrado = telaCadastro(leitor, titular, conta, random);
+                    if(cadastrado){
+                        System.out.println("Usuário cadastrado!");
+                        Thread.sleep(5000);
+                    }
                     break;
                 case 3:
                     System.out.println("Você escolheu sair...");
@@ -41,14 +45,14 @@ public class Main {
                     break;
             }
 
-            if(user > -1){
+            if(user > -1 && cadastrado == false){
                 access = true;
             } else {
                 System.out.println("não foi possível acessar sua conta...");
                 Thread.sleep(4000);
-                break;
+                limpaTela();
             }
-        } while (access = false);
+        } while (!access);
 
         //pós logado
         if(access){
@@ -128,6 +132,7 @@ public class Main {
         boolean titularCadastrado = false;
         do{
             //cadastrando nome
+            leitor.nextLine();
             System.out.print("Por favor, informe seu nome: ");
             String nome = leitor.nextLine();
             System.out.print("informe seu sobrenome: ");
@@ -173,8 +178,9 @@ public class Main {
         return titularCadastrado;
     }
 
-    public static boolean cadastrandoAgencia(Conta conta, Random random){
+    public static boolean cadastrandoAgencia(Conta conta, Random random) throws Exception{
         System.out.println("Estamos criando sua agência... Aguarde uns segundos...");
+        Thread.sleep(5000);
         String agencia;
         boolean ag = false;
         do {
@@ -184,28 +190,39 @@ public class Main {
             if (conta.verificandoAgencia(agencia)) {
                 System.out.println("Agência criada já existente, será criada uma nova, aguarde...");
             } else {
+                System.out.println("Agencia criada com sucesso!");
+                System.out.println("Agencia: " + agencia);
                 conta.setAgencia(agencia);
+                Thread.sleep(5000);
                 ag = true;
             }
         } while (!ag); 
         return ag;
     }
 
-    public static boolean cadastrandoConta(Conta conta, Random random){
+    public static boolean cadastrandoConta(Conta conta, Random random) throws Exception{
         boolean account = false;
         String con;
         do {
-            
+            int numero = random.nextInt(10000000);
+            int digito = random.nextInt(10);
+            con = String.format("%07d-%d", numero, digito);
+            if(conta.verificandoConta(con)){
+                System.out.println("número da conta já existente, será criada uma nova, aguarde...");
+            } else {
+                System.out.println("Conta criada com sucesso!");
+                System.out.println("Conta: " + con);
+                conta.setConta(con);
+                Thread.sleep(5000);
+                account  = true;
+            }
         } while (!account);
-
         return account;
     }
 
     public static void esquecisenha(){
         System.out.println("testando");
     }
-
-    
 
     public static void limpaTela() {
         try {
@@ -226,6 +243,4 @@ public class Main {
             }
         }
     }
-
-    
 }
