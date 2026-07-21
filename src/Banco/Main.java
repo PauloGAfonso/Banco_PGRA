@@ -45,7 +45,7 @@ public class Main {
                     break;
             }
 
-            if(user > -1 && cadastrado == false){
+            if(user > -1){
                 access = true;
             } else {
                 System.out.println("não foi possível acessar sua conta...");
@@ -57,7 +57,8 @@ public class Main {
         //pós logado
         if(access){
             do {
-                
+                System.out.println("Você logou");
+                System.exit(0);
             } while (true);
         }
 
@@ -74,23 +75,28 @@ public class Main {
         int loop = 0;
         boolean senhaVerificada = false;
         do {
+            //CPF
             System.out.print("Informe o numero do seu CPF: ");
             String verificandoCPF = leitor.nextLine();
-            if(verificandoCPF.equalsIgnoreCase("esqueci")){
-                esquecisenha();
-            }
-            
-            System.out.print("Informe a senha: ");
-            String password = leitor.nextLine();    
-        
+
+            //Senha
+            String password;
+            do{
+                System.out.print("Informe a senha: ");
+                password = leitor.nextLine();    
+                if(password.equalsIgnoreCase("esqueci")){
+                    esquecisenha(leitor, titular, conta);
+                }
+            }while(!password.equalsIgnoreCase("esqueci"));
             
             senhaVerificada = conta.verificandoSenha(verificandoCPF, password);
-            if (senhaVerificada == false) {
-                loop +=1;
+            if (!senhaVerificada) {
+                loop ++;
                 System.out.println("usuário ou senha incorreta");
             } else {
                 usuário = titular.getPosition(verificandoCPF);
             }
+            
 
             System.out.print("gostaria de tentar mais uma vez?(y/n): ");
             resp = leitor.nextLine();
@@ -114,18 +120,16 @@ public class Main {
         boolean titularCadastrado = false;
         boolean agencia = false;
         boolean account = false;
+        boolean password = false;
 
         do{
             titularCadastrado = cadastrandoUsuario(titular, leitor);
             agencia = cadastrandoAgencia(conta, random);
             account = cadastrandoConta(conta, random);
-        }while(!(titularCadastrado && agencia && account));
+            password = cadastrandoSenha(conta, leitor);
+        }while(!(titularCadastrado && agencia && account && password));
 
-        if(titularCadastrado && agencia && account){
-            return true;
-        } else {
-            return false;
-        }
+        return titularCadastrado && agencia && account && password;
     }
 
     public static boolean cadastrandoUsuario(Titular titular, Scanner leitor) throws Exception{
@@ -220,8 +224,38 @@ public class Main {
         return account;
     }
 
-    public static void esquecisenha(){
-        System.out.println("testando");
+    public static boolean cadastrandoSenha(Conta conta, Scanner leitor){
+        String nova_senha;
+        do {
+            System.out.print("Digite uma senha de 4 dígitos numéricos: ");
+            nova_senha = leitor.nextLine();
+            if (!nova_senha.matches("\\d{4}")) {
+                System.out.println("Senha inválida, insira apenas 4 números.");
+            }
+        } while (!nova_senha.matches("\\d{4}"));
+
+        conta.setSenha(nova_senha);
+        return true;
+    }
+
+
+    public static void esquecisenha(Scanner leitor, Titular titular, Conta conta){
+        System.out.print("Por favor, informe seu CPF: ");
+        String cpf = leitor.nextLine();
+        String checking_cpf = titular.getcpfs(cpf);
+        if(checking_cpf != null){
+            String nova_senha;
+            do {
+                System.out.print("Informe a nova senha que deseja criar: ");
+                nova_senha = leitor.nextLine();
+                if (!nova_senha.matches("\\d{4}")) {
+                    System.out.println("Senha inválida, insira apenas 4 números.");
+                }
+            } while (!nova_senha.matches("\\d{4}"));
+
+            int posicao = titular.getPosition(checking_cpf);
+            conta.changingSenha(nova_senha, posicao);
+        }
     }
 
     public static void limpaTela() {

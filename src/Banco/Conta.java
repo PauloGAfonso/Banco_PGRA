@@ -56,18 +56,15 @@ public class Conta {
         this.senha.add(senha);
     }
 
+    public void changingSenha(String senha, int posicao){
+        this.senha.set(posicao, senha);
+    }
+
     public boolean verificandoSenha(String cpf, String senha){
         int posicao = titular.getPosition(cpf);
-        if(posicao != -1){
-            if(this.senha.get(posicao).equals(senha)){
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+        return posicao != -1 && this.senha.get(posicao).equals(senha);
     }
+
 
 
 
