@@ -71,7 +71,7 @@ public class Main {
     public static int telaLogin(Scanner leitor, Titular titular, Conta conta){
 
         int usuário = Integer.MIN_VALUE;
-        String resp;
+        String resp = "y";
         int loop = 0;
         boolean senhaVerificada = false;
         do {
@@ -80,14 +80,13 @@ public class Main {
             String verificandoCPF = leitor.nextLine();
 
             //Senha
-            String password;
-            do{
-                System.out.print("Informe a senha: ");
-                password = leitor.nextLine();    
-                if(password.equalsIgnoreCase("esqueci")){
-                    esquecisenha(leitor, titular, conta);
-                }
-            }while(!password.equalsIgnoreCase("esqueci"));
+            System.out.print("Informe a senha (ou digite 'esqueci' para redefinir): ");
+            String password = leitor.nextLine();
+
+            if (password.equalsIgnoreCase("esqueci")) {
+                esquecisenha(leitor, titular, conta);
+                continue; // volta para pedir login de novo
+            }
             
             senhaVerificada = conta.verificandoSenha(verificandoCPF, password);
             if (!senhaVerificada) {
@@ -95,6 +94,8 @@ public class Main {
                 System.out.println("usuário ou senha incorreta");
             } else {
                 usuário = titular.getPosition(verificandoCPF);
+                System.out.println("Login realizado com sucesso!");
+
             }
             
 
