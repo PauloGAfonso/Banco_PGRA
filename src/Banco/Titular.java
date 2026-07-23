@@ -18,6 +18,10 @@ public class Titular {
         }
     }
 
+    public String getnomesPosition(int usuario){
+        return nomes.get(usuario);
+    }
+
     public void setNomes(String nome) {
         nomes.add(nome);
         id.add(nomes.indexOf(nome));

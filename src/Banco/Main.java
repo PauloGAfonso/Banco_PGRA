@@ -28,6 +28,13 @@ public class Main {
             switch (resposta) {
                 case 1:
                     user = telaLogin(leitor, titular, conta);
+                    if(user > -1){
+                        access = true;
+                    } else {
+                        System.out.println("não foi possível acessar sua conta...");
+                        Thread.sleep(4000);
+                        limpaTela();
+                    }
                     break;
                 case 2:
                     cadastrado = telaCadastro(leitor, titular, conta, random);
@@ -44,20 +51,12 @@ public class Main {
                     System.exit(1);
                     break;
             }
-
-            if(user > -1){
-                access = true;
-            } else {
-                System.out.println("não foi possível acessar sua conta...");
-                Thread.sleep(4000);
-                limpaTela();
-            }
         } while (!access);
 
         //pós logado
         if(access){
             do {
-                System.out.println("Você logou");
+                System.out.println("Você logou bem vindo usuário: " + titular.getnomesPosition(user));
                 System.exit(0);
             } while (true);
         }
@@ -87,7 +86,6 @@ public class Main {
                 esquecisenha(leitor, titular, conta);
                 continue; // volta para pedir login de novo
             }
-            
             senhaVerificada = conta.verificandoSenha(verificandoCPF, password);
             if (!senhaVerificada) {
                 loop ++;
@@ -97,8 +95,6 @@ public class Main {
                 System.out.println("Login realizado com sucesso!");
 
             }
-            
-
             System.out.print("gostaria de tentar mais uma vez?(y/n): ");
             resp = leitor.nextLine();
             
