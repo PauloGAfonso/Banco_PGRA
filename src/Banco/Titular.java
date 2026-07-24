@@ -7,6 +7,7 @@ public class Titular {
     private ArrayList<String> cpfs = new ArrayList<>();
     private ArrayList<Integer> idades = new ArrayList<>();
     private ArrayList<Integer> id = new ArrayList<>();
+    private ArrayList<String> senha = new ArrayList<>();
     
     
     public String getNomes(String nome) {
@@ -41,12 +42,11 @@ public class Titular {
     }
 
     public int getPosition(String cpf){
-        return cpfs.indexOf(cpf);
+        return this.cpfs.indexOf(cpf);
     }
 
-
     public void setCpfs(String cpf){
-        cpfs.add(cpf);
+        this.cpfs.add(cpf);
         this.id.add(cpfs.indexOf(cpf));
     }
     
@@ -61,6 +61,26 @@ public class Titular {
 
     public void setIdade(int idade){
         idades.add(idade);
+    }
+
+    public boolean verificandoSenha(String cpf, String senha){
+        int posicao = getPosition(cpf);
+        return posicao != -1 && this.senha.get(posicao).equals(senha);
+    }
+
+    public void changingSenha(String senha, int posicao){
+        this.senha.set(posicao, senha);
+    }
+
+    public String getSenha(int position){
+        return this.senha.get(position);
+    }
+
+    public void setSenha(int posicao, String senha){
+        while(this.senha.size() <= posicao) {
+            this.senha.add(null); // cria espaço até o índice
+        }
+        this.senha.set(posicao, senha);
     }
 
 }

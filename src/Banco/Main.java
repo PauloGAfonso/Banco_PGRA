@@ -16,31 +16,28 @@ public class Main {
         
        do{
             System.out.println("Bem vindo ao Banco PGRA!");
-            Thread.sleep(3000);
             System.out.println("Digite 1 para acessar sua conta!");
-            Thread.sleep(3000);
             System.out.println("Digite 2 para cadastrar sua conta.");
-            Thread.sleep(3000);
             System.out.println("Digite 3 para sair!");
-            Thread.sleep(3000);
             System.out.print("R: ");
             int resposta = leitor.nextInt();
+            leitor.nextLine();
             switch (resposta) {
                 case 1:
-                    user = telaLogin(leitor, titular, conta);
-                    if(user > -1){
-                        access = true;
-                    } else {
-                        System.out.println("não foi possível acessar sua conta...");
-                        Thread.sleep(4000);
-                        limpaTela();
-                    }
+                    System.out.print("Informe seu CPF: ");
+                    String cpf = leitor.nextLine();
+                    user = titular.getPosition(cpf);
+
+                    System.out.print("informe sua senha: ");
+                    String senha = leitor.nextLine();
+
                     break;
                 case 2:
                     cadastrado = telaCadastro(leitor, titular, conta, random);
                     if(cadastrado){
                         System.out.println("Usuário cadastrado!");
                         Thread.sleep(5000);
+                        limpaTela();
                     }
                     break;
                 case 3:
@@ -67,73 +64,39 @@ public class Main {
     }
 
     //Usuário logando
-    public static int telaLogin(Scanner leitor, Titular titular, Conta conta){
-
-        int usuário = Integer.MIN_VALUE;
-        String resp = "y";
-        int loop = 0;
+    public static boolean telaLogin(String cpf, String senha, Titular titular, Conta conta){
         boolean senhaVerificada = false;
-        do {
-            //CPF
-            System.out.print("Informe o numero do seu CPF: ");
-            String verificandoCPF = leitor.nextLine();
+        boolean check_cpf = titular.verificandoCpfs(cpf);
+        int posicao = titular.getPosition(cpf);
 
-            //Senha
-            System.out.print("Informe a senha (ou digite 'esqueci' para redefinir): ");
-            String password = leitor.nextLine();
+        String check_senha = titular.getSenha(posicao);
 
-            if (password.equalsIgnoreCase("esqueci")) {
-                esquecisenha(leitor, titular, conta);
-                continue; // volta para pedir login de novo
-            }
-            senhaVerificada = conta.verificandoSenha(verificandoCPF, password);
-            if (!senhaVerificada) {
-                loop ++;
-                System.out.println("usuário ou senha incorreta");
-            } else {
-                usuário = titular.getPosition(verificandoCPF);
-                System.out.println("Login realizado com sucesso!");
-
-            }
-            System.out.print("gostaria de tentar mais uma vez?(y/n): ");
-            resp = leitor.nextLine();
-            
-
-        } while (senhaVerificada != true && loop < 3 && !resp.equalsIgnoreCase("n"));
-
-        if(senhaVerificada == false){
-            usuário = -1;
-        }
-        
-        if(loop == 3){
-            System.out.println("Excesso de erro de login, encerrando o programa");
-            System.exit(0);
+        if(check_cpf && check_senha.equals(senha)){
+            return !senhaVerificada;
+        } else {
+            return senhaVerificada;
         }
 
-        return usuário;
     }
 
     public static boolean telaCadastro(Scanner leitor, Titular titular, Conta conta ,Random random) throws Exception {
         boolean titularCadastrado = false;
         boolean agencia = false;
         boolean account = false;
-        boolean password = false;
 
         do{
             titularCadastrado = cadastrandoUsuario(titular, leitor);
             agencia = cadastrandoAgencia(conta, random);
             account = cadastrandoConta(conta, random);
-            password = cadastrandoSenha(conta, leitor);
-        }while(!(titularCadastrado && agencia && account && password));
+        }while(!(titularCadastrado && agencia && account));
 
-        return titularCadastrado && agencia && account && password;
+        return titularCadastrado && agencia && account;
     }
 
     public static boolean cadastrandoUsuario(Titular titular, Scanner leitor) throws Exception{
         boolean titularCadastrado = false;
         do{
             //cadastrando nome
-            leitor.nextLine();
             System.out.print("Por favor, informe seu nome: ");
             String nome = leitor.nextLine();
             System.out.print("informe seu sobrenome: ");
@@ -221,20 +184,6 @@ public class Main {
         return account;
     }
 
-    public static boolean cadastrandoSenha(Conta conta, Scanner leitor){
-        String nova_senha;
-        do {
-            System.out.print("Digite uma senha de 4 dígitos numéricos: ");
-            nova_senha = leitor.nextLine();
-            if (!nova_senha.matches("\\d{4}")) {
-                System.out.println("Senha inválida, insira apenas 4 números.");
-            }
-        } while (!nova_senha.matches("\\d{4}"));
-
-        conta.setSenha(nova_senha);
-        return true;
-    }
-
 
     public static void esquecisenha(Scanner leitor, Titular titular, Conta conta){
         System.out.print("Por favor, informe seu CPF: ");
@@ -251,7 +200,7 @@ public class Main {
             } while (!nova_senha.matches("\\d{4}"));
 
             int posicao = titular.getPosition(checking_cpf);
-            conta.changingSenha(nova_senha, posicao);
+            titular.changingSenha(nova_senha, posicao);
         }
     }
 

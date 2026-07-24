@@ -7,7 +7,7 @@ public class Conta {
     private ArrayList<String> agencia = new ArrayList<>();
     private ArrayList<String> numConta = new ArrayList<>();
     private ArrayList<Double> saldo = new ArrayList<>();
-    private ArrayList<String> senha = new ArrayList<>();
+    
 
     public void setAgencia(String agencia){
         this.agencia.add(agencia);
@@ -52,21 +52,13 @@ public class Conta {
         }
     }
 
-    public void setSenha(String senha){
-        this.senha.add(senha);
-    }
-
-    public void changingSenha(String senha, int posicao){
-        this.senha.set(posicao, senha);
-    }
-
-    public boolean verificandoSenha(String cpf, String senha){
-        int posicao = titular.getPosition(cpf);
-        return posicao != -1 && this.senha.get(posicao).equals(senha);
-    }
+    
 
 
+    
 
+    
 
+    
 
 }
