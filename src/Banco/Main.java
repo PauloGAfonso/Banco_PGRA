@@ -30,7 +30,12 @@ public class Main {
 
                     System.out.print("informe sua senha: ");
                     String senha = leitor.nextLine();
-
+                    access = titular.verificandoSenha(user, senha);
+                    if(access){
+                        System.out.println("Login realizado com sucesso!");
+                    } else {
+                        System.out.println("Usuário ou senha incorreto");
+                    }
                     break;
                 case 2:
                     cadastrado = telaCadastro(leitor, titular, conta, random);
@@ -50,33 +55,19 @@ public class Main {
             }
         } while (!access);
 
-        //pós logado
+        //Usuário logado
         if(access){
             do {
                 System.out.println("Você logou bem vindo usuário: " + titular.getnomesPosition(user));
+                Thread.sleep(5000);
                 System.exit(0);
+
             } while (true);
         }
 
         System.out.println("Obrigado por usar o banco PGRA");
     
         leitor.close();
-    }
-
-    //Usuário logando
-    public static boolean telaLogin(String cpf, String senha, Titular titular, Conta conta){
-        boolean senhaVerificada = false;
-        boolean check_cpf = titular.verificandoCpfs(cpf);
-        int posicao = titular.getPosition(cpf);
-
-        String check_senha = titular.getSenha(posicao);
-
-        if(check_cpf && check_senha.equals(senha)){
-            return !senhaVerificada;
-        } else {
-            return senhaVerificada;
-        }
-
     }
 
     public static boolean telaCadastro(Scanner leitor, Titular titular, Conta conta ,Random random) throws Exception {
@@ -104,16 +95,16 @@ public class Main {
             String nomeCompleto = nome + " " + sobrenome;
 
             //cadastrando CPF
-            boolean verificando;
+            boolean verificando = true;
             String cpf;
             do {
                 System.out.print("Informe o seu CPF: ");
                 cpf = leitor.nextLine();
                 verificando = titular.verificandoCpfs(cpf);
-                if (verificando == true){
+                if (verificando){
                     System.out.println("Esse cpf já foi registrado, por favor informe um cpf valido.");
                 }
-            } while (verificando != false);
+            } while (verificando);
             
             //verificando Idade
             System.out.print("Informe sua idade: ");
@@ -123,11 +114,23 @@ public class Main {
                 System.out.println("Você não tem idade permitida para criar uma conta, encerrando o programa...");
             }
 
+            //Definindo senha
+            String senha;
+            do {
+                System.out.print("Digite uma senha de 4 digitos numéricos: ");
+                senha = leitor.nextLine();
+                if(!senha.matches("\\d{4}")){
+                    System.out.println("Entrada inválida! Digite exatamente 4 números.");
+                }
+            } while(!senha.matches("\\d{4}"));
+
 
             if(nomeCompleto != null && !nomeCompleto.isEmpty() && cpf.length() == 11 && cpf.matches("\\d{11}") && idade >= 18){
                 titular.setNomes(nomeCompleto);
                 titular.setCpfs(cpf);
                 titular.setIdade(idade);
+                int posicao = titular.getPosition(cpf);
+                titular.setSenha(posicao, senha);
                 titularCadastrado = true;
                 System.out.println("Titular cadastrado corretamente");
                 Thread.sleep(5000);
@@ -137,7 +140,7 @@ public class Main {
                 Thread.sleep(4000);
                 limpaTela();
             }
-        } while(titularCadastrado != true);
+        } while(!titularCadastrado);
 
         return titularCadastrado;
     }
@@ -183,7 +186,6 @@ public class Main {
         } while (!account);
         return account;
     }
-
 
     public static void esquecisenha(Scanner leitor, Titular titular, Conta conta){
         System.out.print("Por favor, informe seu CPF: ");

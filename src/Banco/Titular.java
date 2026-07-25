@@ -3,10 +3,10 @@ import java.util.*;
 
 public class Titular {
 
-    private ArrayList<String> nomes = new ArrayList<>();
-    private ArrayList<String> cpfs = new ArrayList<>();
+    private final ArrayList<String> nomes = new ArrayList<>();
+    private final ArrayList<String> cpfs = new ArrayList<>();
     private ArrayList<Integer> idades = new ArrayList<>();
-    private ArrayList<Integer> id = new ArrayList<>();
+    private final ArrayList<Integer> id = new ArrayList<>();
     private ArrayList<String> senha = new ArrayList<>();
     
     
@@ -63,16 +63,20 @@ public class Titular {
         idades.add(idade);
     }
 
-    public boolean verificandoSenha(String cpf, String senha){
-        int posicao = getPosition(cpf);
-        return posicao != -1 && this.senha.get(posicao).equals(senha);
+    public boolean verificandoSenha(int posicao, String senha){
+        if (posicao >= 0 && posicao < this.senha.size()) {
+            String password = getSenha(posicao);
+            return password.equals(senha);
+        }
+        return false; // posição inválida
     }
+
 
     public void changingSenha(String senha, int posicao){
         this.senha.set(posicao, senha);
     }
 
-    public String getSenha(int position){
+    private String getSenha(int position){
         return this.senha.get(position);
     }
 
