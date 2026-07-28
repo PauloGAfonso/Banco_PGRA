@@ -23,9 +23,12 @@ public class Titular {
         return nomes.get(usuario);
     }
 
-    public void setNomes(String nome) {
-        nomes.add(nome);
-        id.add(nomes.indexOf(nome));
+    public void setNomes(int posicao, String nome) {
+        while(this.nomes.size() <= posicao){
+            this.nomes.add(null);
+        }
+        this.nomes.set(posicao, nome);
+        id.add(this.nomes.indexOf(nome));
     }
 
     public String getcpfs(String cpf){
@@ -59,8 +62,11 @@ public class Titular {
         }
     }
 
-    public void setIdade(int idade){
-        idades.add(idade);
+    public void setIdade(int posicao, int idade){
+        while (this.idades.size() <= posicao) {
+            this.idades.add(null); // cria espaço até o índice
+        }
+        this.idades.set(posicao, idade);
     }
 
     public boolean verificandoSenha(int posicao, String senha){

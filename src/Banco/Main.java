@@ -55,10 +55,18 @@ public class Main {
             }
         } while (!access);
 
+        limpaTela();
+
         //Usuário logado
         if(access){
             do {
-                System.out.println("Você logou bem vindo usuário: " + titular.getnomesPosition(user));
+                System.out.println("Bem vindo usuário: " + titular.getnomesPosition(user));
+
+                System.out.println("Infome qual operação deseja ralizar: ");
+                System.out.println("Digite 1 para consultar seu saldo.");
+                System.out.println("Digite 2 para realizar um depósito depósitar.");
+                System.out.println("Digite 3 para realizar um depósito saque.");
+
                 Thread.sleep(5000);
                 System.exit(0);
 
@@ -72,20 +80,17 @@ public class Main {
 
     public static boolean telaCadastro(Scanner leitor, Titular titular, Conta conta ,Random random) throws Exception {
         boolean titularCadastrado = false;
-        boolean agencia = false;
-        boolean account = false;
 
         do{
-            titularCadastrado = cadastrandoUsuario(titular, leitor);
-            agencia = cadastrandoAgencia(conta, random);
-            account = cadastrandoConta(conta, random);
-        }while(!(titularCadastrado && agencia && account));
+            titularCadastrado = cadastrandoUsuario(titular, conta, leitor);
+        }while(!titularCadastrado);
 
-        return titularCadastrado && agencia && account;
+        return titularCadastrado;
     }
 
-    public static boolean cadastrandoUsuario(Titular titular, Scanner leitor) throws Exception{
+    public static boolean cadastrandoUsuario(Titular titular, Conta conta , Scanner leitor) throws Exception{
         boolean titularCadastrado = false;
+        Random random = new Random();
         do{
             //cadastrando nome
             System.out.print("Por favor, informe seu nome: ");
@@ -125,12 +130,15 @@ public class Main {
             } while(!senha.matches("\\d{4}"));
 
 
+            
             if(nomeCompleto != null && !nomeCompleto.isEmpty() && cpf.length() == 11 && cpf.matches("\\d{11}") && idade >= 18){
-                titular.setNomes(nomeCompleto);
                 titular.setCpfs(cpf);
-                titular.setIdade(idade);
                 int posicao = titular.getPosition(cpf);
+                titular.setNomes(posicao, nomeCompleto);
+                titular.setIdade(posicao, idade);
                 titular.setSenha(posicao, senha);
+                conta.setAgencia(posicao, random);
+                conta.setConta(posicao, random);
                 titularCadastrado = true;
                 System.out.println("Titular cadastrado corretamente");
                 Thread.sleep(5000);
@@ -143,48 +151,6 @@ public class Main {
         } while(!titularCadastrado);
 
         return titularCadastrado;
-    }
-
-    public static boolean cadastrandoAgencia(Conta conta, Random random) throws Exception{
-        System.out.println("Estamos criando sua agência... Aguarde uns segundos...");
-        Thread.sleep(5000);
-        String agencia;
-        boolean ag = false;
-        do {
-            int numero = random.nextInt(10000);
-            int digito = random.nextInt(10);
-            agencia = String.format("%04d-%d", numero, digito);
-            if (conta.verificandoAgencia(agencia)) {
-                System.out.println("Agência criada já existente, será criada uma nova, aguarde...");
-            } else {
-                System.out.println("Agencia criada com sucesso!");
-                System.out.println("Agencia: " + agencia);
-                conta.setAgencia(agencia);
-                Thread.sleep(5000);
-                ag = true;
-            }
-        } while (!ag); 
-        return ag;
-    }
-
-    public static boolean cadastrandoConta(Conta conta, Random random) throws Exception{
-        boolean account = false;
-        String con;
-        do {
-            int numero = random.nextInt(10000000);
-            int digito = random.nextInt(10);
-            con = String.format("%07d-%d", numero, digito);
-            if(conta.verificandoConta(con)){
-                System.out.println("número da conta já existente, será criada uma nova, aguarde...");
-            } else {
-                System.out.println("Conta criada com sucesso!");
-                System.out.println("Conta: " + con);
-                conta.setConta(con);
-                Thread.sleep(5000);
-                account  = true;
-            }
-        } while (!account);
-        return account;
     }
 
     public static void esquecisenha(Scanner leitor, Titular titular, Conta conta){

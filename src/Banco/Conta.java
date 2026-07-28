@@ -3,22 +3,61 @@ import java.util.*;
 
 public class Conta {
 
-    private Titular titular = new Titular();
     private ArrayList<String> agencia = new ArrayList<>();
     private ArrayList<String> numConta = new ArrayList<>();
     private ArrayList<Double> saldo = new ArrayList<>();
     
 
-    public void setAgencia(String agencia){
-        this.agencia.add(agencia);
+    public void setAgencia(int posicao, Random random) throws Exception {
+        System.out.println("Estamos criando sua agência... Aguarde uns segundos...");
+        Thread.sleep(5000);
+        String agencia;
+        boolean criada = false;
+        do {
+            int numero = random.nextInt(10000);
+            int digito = random.nextInt(10);
+            agencia = String.format("%04d-%d", numero, digito);
+            if (this.agencia.contains(agencia)) {
+                System.out.println("Agência já existente, criando uma nova...");
+            } else {
+                System.out.println("Agência criada com sucesso!");
+                System.out.println("Agência: " + agencia);
+                while (this.agencia.size() <= posicao) {
+                    this.agencia.add(null);
+                }
+                this.agencia.set(posicao, agencia); // já salva na lista
+                Thread.sleep(5000);
+                criada = true;
+            }
+        } while (!criada);
     }
 
     public boolean verificandoAgencia(String agencia){
         return this.agencia.contains(agencia);
     }
 
-    public void setConta(String conta){
-        this.numConta.add(conta);
+    public void setConta(int posicao, Random random) throws Exception{
+        System.out.println("Estamos criando sua conta... Aguarde uns segundos...");
+        Thread.sleep(5000);
+        String conta;
+        boolean criada = false;
+        do {
+            int numero = random.nextInt(10000000);
+            int digito = random.nextInt(10);
+            conta = String.format("%07d-%d", numero, digito);
+            if (this.numConta.contains(conta)) {
+                System.out.println("Conta já existente, criando uma nova...");
+            } else {
+                System.out.println("Conta criada com sucesso!");
+                System.out.println("Conta: " + conta);
+                while (this.numConta.size() <= posicao) {
+                    this.numConta.add(null);
+                }
+                this.numConta.set(posicao, conta); // já salva na lista
+                Thread.sleep(5000);
+                criada = true;
+            }
+        } while (!criada);
     }
 
     public boolean verificandoConta(String conta){
