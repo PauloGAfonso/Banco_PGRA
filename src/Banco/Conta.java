@@ -96,6 +96,9 @@ public class Conta {
     }
 
     public void setSaldo(int posicao, double deposito){
+        while(this.saldo.size() <= posicao){
+            this.saldo.add(0.0);
+        }
         this.saldo.set(posicao, deposito);
     }
 

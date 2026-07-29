@@ -13,6 +13,22 @@ public class Main {
         boolean access = false;
         boolean cadastrado = false;
         int user = -1;
+
+        String [] nomes = {"Paulo", "Gabriel", "Ramos", "Afonso"};
+        String [] cpfs = {"49558542814", "32698785210", "65423187990", "35699156478"};
+        int[] age = {19, 25, 32, 28};
+        String[] senhas = {"5139", "4937", "9236", "1288"};
+
+        for(int i = 0; i < nomes.length; i++){
+            titular.setCpfs(cpfs[i]);
+            titular.setNomes(i, nomes[i]);
+            titular.setCpfs(cpfs[i]);
+            titular.setIdade(i, age[i]);
+            titular.setSenha(i, senhas[i]);
+            conta.setAgencia(i, random);
+            conta.setConta(i, random);
+            conta.setSaldo(i, 0.0);
+        }
         
        do{
             System.out.println("Bem vindo ao Banco PGRA!");
@@ -55,6 +71,7 @@ public class Main {
             }
         } while (!access);
 
+        Thread.sleep(5000);
         limpaTela();
 
         //Usuário logado
@@ -176,6 +193,7 @@ public class Main {
                 titular.setSenha(posicao, senha);
                 conta.setAgencia(posicao, random);
                 conta.setConta(posicao, random);
+
                 titularCadastrado = true;
                 System.out.println("Titular cadastrado corretamente");
                 Thread.sleep(5000);
