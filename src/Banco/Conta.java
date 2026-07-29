@@ -91,6 +91,14 @@ public class Conta {
         }
     }
 
+    public Double getSaldo(int posicao){
+        return this.saldo.get(posicao);
+    }
+
+    public void setSaldo(int posicao, double deposito){
+        this.saldo.set(posicao, deposito);
+    }
+
     
 
 

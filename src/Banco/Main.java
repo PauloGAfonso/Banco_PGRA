@@ -59,13 +59,45 @@ public class Main {
 
         //Usuário logado
         if(access){
+            
             do {
-                System.out.println("Bem vindo usuário: " + titular.getnomesPosition(user));
-
-                System.out.println("Infome qual operação deseja ralizar: ");
-                System.out.println("Digite 1 para consultar seu saldo.");
-                System.out.println("Digite 2 para realizar um depósito depósitar.");
-                System.out.println("Digite 3 para realizar um depósito saque.");
+                System.out.println("===== MENU BANCO =====");
+                System.out.println("1 - Consultar saldo");
+                System.out.println("2 - Depositar");
+                System.out.println("3 - Sacar");
+                System.out.println("4 - Transferir");
+                System.out.println("5 - Extrato");
+                System.out.println("6 - Alterar senha");
+                System.out.println("0 - Sair");
+                int escolha = leitor.nextInt();
+                leitor.nextLine();
+                switch (escolha) {
+                    case 1:
+                        double saldo = conta.getSaldo(user);
+                        System.out.println("Seu saldo atual é: " + saldo);
+                        break;
+                    case 2:
+                        
+                        break;
+                    case 3:
+                        
+                        break;
+                    case 4:
+                        
+                        break;
+                    case 5:
+                        
+                        break;
+                    case 6:
+                        
+                        break;
+                    case 0:
+                        System.out.println("Você escolheu sair...");
+                        break;
+                
+                    default:
+                        break;
+                }
 
                 Thread.sleep(5000);
                 System.exit(0);
