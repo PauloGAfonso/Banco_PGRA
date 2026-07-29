@@ -77,13 +77,17 @@ public class Titular {
         return false; // posição inválida
     }
 
-
+    private String getSenha(int position){
+        return this.senha.get(position);
+    }
+    
     public void changingSenha(String senha, int posicao){
         this.senha.set(posicao, senha);
     }
 
-    private String getSenha(int position){
-        return this.senha.get(position);
+    public boolean checkingSenha(int posicao, String senha){
+        String check = getSenha(posicao);
+        return check.equalsIgnoreCase(senha);
     }
 
     public void setSenha(int posicao, String senha){
