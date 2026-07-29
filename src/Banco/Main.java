@@ -58,51 +58,56 @@ public class Main {
         limpaTela();
 
         //Usuário logado
-        if(access){
+        while(access){
+            System.out.println("===== MENU BANCO =====");
+            System.out.println("1 - Consultar saldo");
+            System.out.println("2 - Depositar");
+            System.out.println("3 - Sacar");
+            System.out.println("4 - Transferir");
+            System.out.println("5 - Extrato");
+            System.out.println("6 - Alterar senha");
+            System.out.println("0 - Sair");
+            int escolha = leitor.nextInt();
+            leitor.nextLine();
+            limpaTela();
+            switch (escolha) {
+                case 1:
+                    System.out.println("====== Saldo ======");
+                    double saldo = conta.getSaldo(user);
+                    System.out.println("Seu saldo atual é: " + saldo);
+                    System.out.print("Deseja realizar outra operação (S/N): ");
+                    String operation = leitor.nextLine();
+                    if(operation.equalsIgnoreCase("n") ){
+                        access = false;
+                    }
+                    break;
+                case 2:
+                    System.out.println("====== Depósito ======");
+                    double saldo_atual = conta.getSaldo(user);
+                    break;
+                case 3:
+                    System.out.println("====== Saque ======");
+                    break;
+                case 4:
+                    System.out.println("====== Transferência ======");
+                    break;
+                case 5:
+                    System.out.println("====== Extrato ======");
+                    break;
+                case 6:
+                    System.out.println("====== Troca de Senha =======" );
+                    break;
+                case 0:
+                    System.out.println("Você escolheu sair...");
+                    break;
             
-            do {
-                System.out.println("===== MENU BANCO =====");
-                System.out.println("1 - Consultar saldo");
-                System.out.println("2 - Depositar");
-                System.out.println("3 - Sacar");
-                System.out.println("4 - Transferir");
-                System.out.println("5 - Extrato");
-                System.out.println("6 - Alterar senha");
-                System.out.println("0 - Sair");
-                int escolha = leitor.nextInt();
-                leitor.nextLine();
-                switch (escolha) {
-                    case 1:
-                        double saldo = conta.getSaldo(user);
-                        System.out.println("Seu saldo atual é: " + saldo);
-                        break;
-                    case 2:
-                        
-                        break;
-                    case 3:
-                        
-                        break;
-                    case 4:
-                        
-                        break;
-                    case 5:
-                        
-                        break;
-                    case 6:
-                        
-                        break;
-                    case 0:
-                        System.out.println("Você escolheu sair...");
-                        break;
-                
-                    default:
-                        break;
-                }
+                default:
+                    break;
+            }
 
-                Thread.sleep(5000);
-                System.exit(0);
+            Thread.sleep(5000);
+            System.exit(0);
 
-            } while (true);
         }
 
         System.out.println("Obrigado por usar o banco PGRA");
