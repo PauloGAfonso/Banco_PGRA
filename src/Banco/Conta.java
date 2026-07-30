@@ -85,10 +85,18 @@ public class Conta {
     
     }
 
-    public void sacar(int saque, int posicao){
-        if(this.saldo.get(posicao) < saque){
-            System.out.println("Operação indisponível, solicitação de saque superior ao valor disponível na conta");
-        }
+    public void sacar(int posicao, Scanner leitor){
+        boolean saque = false;
+        do{
+            double saldo_atual = getSaldo(posicao);
+            System.out.println("informe o valor que deseja sacar: ");
+            double valor_saque = leitor.nextDouble();
+            leitor.nextLine();
+            if(valor_saque > saldo_atual){
+                
+            }
+        } while(!saque);
+        
     }
 
     public Double getSaldo(int posicao){

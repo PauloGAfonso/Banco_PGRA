@@ -10,6 +10,7 @@ public class Main {
         Conta conta = new Conta();
         Random random = new Random();
         
+        boolean running = true;
         boolean access = false;
         boolean cadastrado = false;
         int user = -1;
@@ -29,103 +30,111 @@ public class Main {
             conta.setConta(i, random);
             conta.setSaldo(i, 0.0);
         }
-        
        do{
-            System.out.println("Bem vindo ao Banco PGRA!");
-            System.out.println("Digite 1 para acessar sua conta!");
-            System.out.println("Digite 2 para cadastrar sua conta.");
-            System.out.println("Digite 3 para sair!");
-            System.out.print("R: ");
-            int resposta = leitor.nextInt();
-            leitor.nextLine();
-            switch (resposta) {
-                case 1:
-                    System.out.print("Informe seu CPF: ");
-                    String cpf = leitor.nextLine();
-                    user = titular.getPosition(cpf);
+            do{
+                System.out.println("Bem vindo ao Banco PGRA!");
+                System.out.println("Digite 1 para acessar sua conta!");
+                System.out.println("Digite 2 para cadastrar sua conta.");
+                System.out.println("Digite 3 para sair!");
+                System.out.print("R: ");
+                int resposta = leitor.nextInt();
+                leitor.nextLine();
+                switch (resposta) {
+                    case 1:
+                        System.out.print("Informe seu CPF: ");
+                        String cpf = leitor.nextLine();
+                        user = titular.getPosition(cpf);
 
-                    System.out.print("informe sua senha: ");
-                    String senha = leitor.nextLine();
-                    access = titular.verificandoSenha(user, senha);
-                    if(access){
-                        System.out.println("Login realizado com sucesso!");
-                    } else {
-                        System.out.println("Usuário ou senha incorreto");
-                    }
-                    break;
-                case 2:
-                    cadastrado = telaCadastro(leitor, titular, conta, random);
-                    if(cadastrado){
-                        System.out.println("Usuário cadastrado!");
-                        Thread.sleep(5000);
-                        limpaTela();
-                    }
-                    break;
-                case 3:
-                    System.out.println("Você escolheu sair...");
-                    break;
-                default:
-                    System.out.println("Opção inexistente, encerrando o programa");
-                    System.exit(1);
-                    break;
-            }
-        } while (!access);
-
-        Thread.sleep(5000);
-        limpaTela();
-
-        //Usuário logado
-        while(access){
-            System.out.println("===== MENU BANCO =====");
-            System.out.println("1 - Consultar saldo");
-            System.out.println("2 - Depositar");
-            System.out.println("3 - Sacar");
-            System.out.println("4 - Transferir");
-            System.out.println("5 - Extrato");
-            System.out.println("6 - Alterar senha");
-            System.out.println("0 - Sair");
-            int escolha = leitor.nextInt();
-            leitor.nextLine();
-            limpaTela();
-            switch (escolha) {
-                case 1:
-                    System.out.println("====== Saldo ======");
-                    double saldo = conta.getSaldo(user);
-                    System.out.println("Seu saldo atual é: " + saldo);
-                    System.out.print("Deseja realizar outra operação (S/N): ");
-                    String operation = leitor.nextLine();
-                    if(operation.equalsIgnoreCase("n") ){
-                        access = false;
-                    }
-                    break;
-                case 2:
-                    System.out.println("====== Depósito ======");
-                    double saldo_atual = conta.getSaldo(user);
-                    break;
-                case 3:
-                    System.out.println("====== Saque ======");
-                    break;
-                case 4:
-                    System.out.println("====== Transferência ======");
-                    break;
-                case 5:
-                    System.out.println("====== Extrato ======");
-                    break;
-                case 6:
-                    System.out.println("====== Troca de Senha =======" );
-                    break;
-                case 0:
-                    System.out.println("Você escolheu sair...");
-                    break;
-            
-                default:
-                    break;
-            }
+                        System.out.print("informe sua senha: ");
+                        String senha = leitor.nextLine();
+                        access = titular.verificandoSenha(user, senha);
+                        if(access){
+                            System.out.println("Login realizado com sucesso!");
+                        } else {
+                            System.out.println("Usuário ou senha incorreto");
+                        }
+                        break;
+                    case 2:
+                        cadastrado = telaCadastro(leitor, titular, conta, random);
+                        if(cadastrado){
+                            System.out.println("Usuário cadastrado!");
+                            Thread.sleep(5000);
+                            limpaTela();
+                        }
+                        break;
+                    case 3:
+                        System.out.println("Você escolheu sair...");
+                        System.exit(1);
+                        running = false;
+                        break;
+                    default:
+                        System.out.println("Opção inexistente, encerrando o programa");
+                        
+                        break;
+                }
+            } while (!access);
 
             Thread.sleep(5000);
-            System.exit(0);
+            limpaTela();
 
-        }
+            //Usuário logado
+            while(access){
+                System.out.println("===== MENU BANCO =====");
+                System.out.println("1 - Consultar saldo");
+                System.out.println("2 - Depositar");
+                System.out.println("3 - Sacar");
+                System.out.println("4 - Transferir");
+                System.out.println("5 - Extrato");
+                System.out.println("6 - Alterar senha");
+                System.out.println("0 - Sair");
+                int escolha = leitor.nextInt();
+                leitor.nextLine();
+                limpaTela();
+                switch (escolha) {
+                    case 1:
+                        System.out.println("====== Saldo ======");
+                        double saldo = conta.getSaldo(user);
+                        System.out.println("Seu saldo atual é: " + saldo);
+                        System.out.print("Deseja realizar outra operação (S/N): ");
+                        String operation = leitor.nextLine();
+                        if(operation.equalsIgnoreCase("n") ){
+                            access = false;
+                        }
+                        break;
+                    case 2:
+                        System.out.println("====== Depósito ======");
+                        double saldo_atual = conta.getSaldo(user);
+                        System.out.println("seu saldo atual: " + saldo_atual);
+                        break;
+                    case 3:
+                        System.out.println("====== Saque ======");
+                            conta.sacar(user, leitor);
+                        break;
+                    case 4:
+                        System.out.println("====== Transferência ======");
+                        break;
+                    case 5:
+                        System.out.println("====== Extrato ======");
+                        break;
+                    case 6:
+                        System.out.println("====== Troca de Senha =======" );
+                        break;
+                    case 0:
+                        System.out.println("Você escolheu sair...");
+                        access = false;
+                        break;
+                
+                    default:
+                        System.out.println("Opção inexistente...");
+                        break;
+                }
+
+                Thread.sleep(5000);
+                System.exit(0);
+
+            }
+
+        }while(running); 
 
         System.out.println("Obrigado por usar o banco PGRA");
     
