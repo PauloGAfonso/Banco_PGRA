@@ -85,17 +85,33 @@ public class Conta {
     
     }
 
-    public void sacar(int posicao, Scanner leitor){
-        boolean saque = false;
+    public void sacar(int posicao, Scanner leitor) throws Exception{
+        boolean continuar = true;
         do{
             double saldo_atual = getSaldo(posicao);
-            System.out.println("informe o valor que deseja sacar: ");
+            System.out.print("informe o valor que deseja sacar: ");
             double valor_saque = leitor.nextDouble();
             leitor.nextLine();
             if(valor_saque > saldo_atual){
-                
+                System.out.println("Saldo insuficiente para realizar essa operação!");
+            } else if(valor_saque <= 0){
+                System.out.println("Você não pode realizar um saque menor ou igual a zero.");
+            } else {
+                saldo_atual = saldo_atual - valor_saque;
+                System.out.println("Saque do valor de " + valor_saque + " foi realizado com sucesso!");
+                System.out.println("Saldo Atual: " + saldo_atual);
+                setSaldo(posicao, saldo_atual);
+                continuar = false;
             }
-        } while(!saque);
+            
+            if(continuar){
+                System.out.print("Deseja continuar(s/n): ");
+                String resposta = leitor.nextLine();
+                if(resposta.equalsIgnoreCase("n")){
+                    continuar = false;
+                }
+            }
+        } while(continuar);
         
     }
 

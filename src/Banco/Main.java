@@ -83,7 +83,7 @@ public class Main {
                 System.out.println("1 - Consultar saldo");
                 System.out.println("2 - Depositar");
                 System.out.println("3 - Sacar");
-                System.out.println("4 - Transferir");
+                System.out.println("4 - Área Pix");
                 System.out.println("5 - Extrato");
                 System.out.println("6 - Alterar senha");
                 System.out.println("0 - Sair");
@@ -111,7 +111,29 @@ public class Main {
                             conta.sacar(user, leitor);
                         break;
                     case 4:
-                        System.out.println("====== Transferência ======");
+                        System.out.println("====== Área Pix ======");
+                        System.out.println("O que deseja fazer agora?");
+                        System.out.println("Digite 1 para realizar um pix!");
+                        System.out.println("Digite 2 para gerar uma chave aleatória");
+                        System.out.println("Digite 3 para cadastrar uma chave pix");
+                        int op = leitor.nextInt();
+                        switch (op) {
+                            case 1:
+                                System.out.println("Informe o método do pix: ");
+                                System.out.println("Digite 1 para CPF.");
+                                System.out.println("Digite 2 para Chave aleatória.");
+                                System.out.println("Digite 3 para agencia.");
+                                break;
+                            case 2:
+                                
+                                break;
+                            case 3:
+                                
+                                break;
+                        
+                            default:
+                                break;
+                        }
                         break;
                     case 5:
                         System.out.println("====== Extrato ======");
