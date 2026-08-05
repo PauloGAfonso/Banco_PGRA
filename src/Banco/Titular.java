@@ -1,4 +1,5 @@
 package Banco;
+
 import java.util.*;
 
 public class Titular {
@@ -8,10 +9,9 @@ public class Titular {
     private ArrayList<Integer> idades = new ArrayList<>();
     private final ArrayList<Integer> id = new ArrayList<>();
     private ArrayList<String> senha = new ArrayList<>();
-    
-    
+
     public String getNomes(String nome) {
-        if(nomes.contains(nome)){
+        if (nomes.contains(nome)) {
             int posicao = nomes.indexOf(nome);
             return nomes.get(posicao);
         } else {
@@ -19,20 +19,20 @@ public class Titular {
         }
     }
 
-    public String getnomesPosition(int usuario){
+    public String getnomesPosition(int usuario) {
         return nomes.get(usuario);
     }
 
     public void setNomes(int posicao, String nome) {
-        while(this.nomes.size() <= posicao){
+        while (this.nomes.size() <= posicao) {
             this.nomes.add(null);
         }
         this.nomes.set(posicao, nome);
         id.add(this.nomes.indexOf(nome));
     }
 
-    public String getcpfs(String cpf){
-        if(cpfs.contains(cpf)){
+    public String getcpfs(String cpf) {
+        if (cpfs.contains(cpf)) {
             int posicao = cpfs.indexOf(cpf);
             return cpfs.get(posicao);
         } else {
@@ -40,36 +40,31 @@ public class Titular {
         }
     }
 
-    public boolean verificandoCpfs(String cpf){
+    public boolean verificandoCpfs(String cpf) {
         return cpfs.contains(cpf);
     }
 
-    public int getPosition(String cpf){
+    public int getPosition(String cpf) {
         return this.cpfs.indexOf(cpf);
     }
 
-    public void setCpfs(String cpf){
+    public void setCpfs(String cpf) {
         this.cpfs.add(cpf);
         this.id.add(cpfs.indexOf(cpf));
     }
-    
-    public int getIdade(int idade){
-        if(idades.contains(idade)){
-            int posicao = idades.indexOf(idade);
-            return idades.get(posicao);
-        } else {
-            return -1;
-        }
+
+    public int getIdade(int posicao) {
+        return this.idades.get(posicao);
     }
 
-    public void setIdade(int posicao, int idade){
+    public void setIdade(int posicao, int idade) {
         while (this.idades.size() <= posicao) {
             this.idades.add(null); // cria espaço até o índice
         }
         this.idades.set(posicao, idade);
     }
 
-    public boolean verificandoSenha(int posicao, String senha){
+    public boolean verificandoSenha(int posicao, String senha) {
         if (posicao >= 0 && posicao < this.senha.size()) {
             String password = getSenha(posicao);
             return password.equals(senha);
@@ -77,21 +72,21 @@ public class Titular {
         return false; // posição inválida
     }
 
-    private String getSenha(int position){
+    private String getSenha(int position) {
         return this.senha.get(position);
     }
-    
-    public void changingSenha(String senha, int posicao){
-        this.senha.set(posicao, senha);
+
+    public void changingSenha(String senha, int posicao) {
+        System.out.print("Informe a senha atual: ");
     }
 
-    public boolean checkingSenha(int posicao, String senha){
+    public boolean checkingSenha(int posicao, String senha) {
         String check = getSenha(posicao);
         return check.equalsIgnoreCase(senha);
     }
 
-    public void setSenha(int posicao, String senha){
-        while(this.senha.size() <= posicao) {
+    public void setSenha(int posicao, String senha) {
+        while (this.senha.size() <= posicao) {
             this.senha.add(null); // cria espaço até o índice
         }
         this.senha.set(posicao, senha);
