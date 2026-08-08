@@ -19,6 +19,10 @@ public class Titular {
         }
     }
 
+    public String gettingNome(int usuario, Scanner scanner){
+        return this.nomes.get(usuario);
+    }
+
     public String getnomesPosition(int usuario) {
         return nomes.get(usuario);
     }
@@ -28,7 +32,6 @@ public class Titular {
             this.nomes.add(null);
         }
         this.nomes.set(posicao, nome);
-        id.add(this.nomes.indexOf(nome));
     }
 
     public String getcpfs(String cpf) {
@@ -67,7 +70,7 @@ public class Titular {
     public boolean verificandoSenha(int posicao, String senha) {
         if (posicao >= 0 && posicao < this.senha.size()) {
             String password = getSenha(posicao);
-            return password.equals(senha);
+            return password != null && password.equals(senha);
         }
         return false; // posição inválida
     }
@@ -90,6 +93,36 @@ public class Titular {
             this.senha.add(null); // cria espaço até o índice
         }
         this.senha.set(posicao, senha);
+    }
+
+    public int tela_login(Scanner leitor){
+        System.out.print("Informe seu cpf: ");
+        String login_cpf = leitor.nextLine();
+        int user = getPosition(login_cpf);
+
+        System.out.print("Informe sua senha: ");
+        String senha = leitor.nextLine();
+        boolean check_senha = verificandoSenha(user, senha);
+
+        if(user >= 0 && check_senha){
+            return user;
+        } else {
+            return -1;
+        }
+
+    }
+
+    public void verificandoNomes(){
+        Scanner scanner = new Scanner(System.in);
+        for(int i = 0; i < this.nomes.size(); i++){
+            System.out.println(i + "º nome: " + gettingNome(i, scanner));
+        }
+
+        scanner.nextLine();
+
+        scanner.close();
+
+
     }
 
 }

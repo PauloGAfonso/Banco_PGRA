@@ -30,30 +30,18 @@ public class Main {
             conta.setConta(i, random);
             conta.setSaldo(i, 0.0);
         }
+
+        // titular.verificandoNomes();
+        limpaTela();
         do {
             do {
-                System.out.println("Bem vindo ao Banco PGRA!");
-                System.out.println("Digite 1 para acessar sua conta!");
-                System.out.println("Digite 2 para cadastrar uma conta.");
-                System.out.println("Digite 3 para sair!");
-                System.out.print("R: ");
-                int resposta = leitor.nextInt();
-                leitor.nextLine();
+                int resposta = conta.menu_principal(leitor);
                 switch (resposta) {
                     case 1:
-                        System.out.print("Informe seu CPF: ");
-                        String cpf = leitor.nextLine();
-                        user = titular.getPosition(cpf);
-
-                        System.out.print("informe sua senha: ");
-                        String senha = leitor.nextLine();
-                        access = titular.verificandoSenha(user, senha);
-                        if (access) {
-                            System.out.println("Login realizado com sucesso!");
-                        } else {
-                            System.out.println("Usuário ou senha incorreto");
-                        }
+                        user = realizarLogin(leitor, titular);
+                        access = (user > -1); // só fica true se login deu certo
                         break;
+
                     case 2:
                         cadastrado = telaCadastro(leitor, titular, conta, random);
                         if (cadastrado) {
@@ -68,8 +56,8 @@ public class Main {
                         running = false;
                         break;
                     default:
-                        System.out.println("Opção inexistente, encerrando o programa");
-
+                        System.out.println("Opção inexistente, tente novamente!");
+                        limpaTela(); 
                         break;
                 }
             } while (!access);
@@ -80,7 +68,7 @@ public class Main {
             // Usuário logado
             while (access) {
                 System.out.println("===== MENU BANCO =====");
-                conta.consultarSaldo(user);
+                conta.consultarSaldo(user, leitor, titular);
 
                 System.out.println();
                 System.out.println("Qual operação deseja realizar?");
@@ -89,6 +77,7 @@ public class Main {
                 System.out.println("3 - Transferência");
                 System.out.println("4 - Alterar senha");
                 System.out.println("0 - Sair");
+                System.out.print("Escolha: ");
                 int escolha = leitor.nextInt();
                 leitor.nextLine();
                 limpaTela();
@@ -204,6 +193,29 @@ public class Main {
 
         return titularCadastrado;
     }
+
+
+    public static int realizarLogin(Scanner leitor, Titular titular) throws InterruptedException {
+    int tentativas = 4;
+    int user = -1;
+
+    do {
+        user = titular.tela_login(leitor);
+        if(user > -1){
+            System.out.println("Login realizado com sucesso!");
+            return user; // devolve o índice do usuário logado
+        } else {
+            tentativas--;
+            System.out.println("Acesso negado!");
+            System.out.println("Tentativas restantes: " + tentativas);
+            Thread.sleep(3000);
+        }
+    } while(tentativas > 0);
+
+        System.out.println("Limite de erros atingidos, retornando ao menu principal!");
+        return -1; // login falhou
+    }
+
 
     public static void esquecisenha(Scanner leitor, Titular titular, Conta conta) {
         System.out.print("Por favor, informe seu CPF: ");

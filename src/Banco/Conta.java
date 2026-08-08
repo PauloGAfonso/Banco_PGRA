@@ -10,7 +10,7 @@ public class Conta {
 
     public void setAgencia(int posicao, Random random) throws Exception {
         System.out.println("Estamos criando sua agência... Aguarde uns segundos...");
-        Thread.sleep(5000);
+        // Thread.sleep(5000);
         String agencia;
         boolean criada = false;
         do {
@@ -26,7 +26,7 @@ public class Conta {
                     this.agencia.add(null);
                 }
                 this.agencia.set(posicao, agencia); // já salva na lista
-                Thread.sleep(5000);
+                // Thread.sleep(5000);
                 criada = true;
             }
         } while (!criada);
@@ -38,7 +38,7 @@ public class Conta {
 
     public void setConta(int posicao, Random random) throws Exception {
         System.out.println("Estamos criando sua conta... Aguarde uns segundos...");
-        Thread.sleep(5000);
+        // Thread.sleep(5000);
         String conta;
         boolean criada = false;
         do {
@@ -54,7 +54,7 @@ public class Conta {
                     this.numConta.add(null);
                 }
                 this.numConta.set(posicao, conta); // já salva na lista
-                Thread.sleep(5000);
+                // Thread.sleep(5000);
                 criada = true;
             }
         } while (!criada);
@@ -124,8 +124,22 @@ public class Conta {
 
     }
 
-    public void consultarSaldo(int usuario) {
+    public void consultarSaldo(int usuario, Scanner leitor, Titular titular) {
+        System.out.println("Usuário: " + titular.gettingNome(usuario, leitor));
+        System.out.println();
         System.out.println("Seu saldo atual é: " + getSaldo(usuario));
+    }
+
+    public int menu_principal(Scanner leitor){
+        System.out.println("Bem vindo ao Banco PGRA!");
+        System.out.println("Digite 1 para acessar sua conta!");
+        System.out.println("Digite 2 para cadastrar uma conta.");
+        System.out.println("Digite 3 para sair!");
+        System.out.print("R: ");
+        int resposta = leitor.nextInt();
+        leitor.nextLine();
+
+        return resposta;
     }
 
 }
