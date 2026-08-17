@@ -113,12 +113,21 @@ public class Conta {
         boolean depositado = false;
         do {
             System.out.print("Informe a quantidade que deseja depositar: ");
-            double depositando = leitor.nextInt();
-            leitor.nextLine();
-            if (depositando > 0) {
+            String valor = leitor.nextLine();
 
-            } else {
-                System.out.println(" informe um número válido");
+            try{
+                Double novo_saldo = Double.parseDouble(valor);
+                double saldo_antigo = this.saldo.get(usuario);
+                Double deposito = novo_saldo + saldo_antigo;
+                if (novo_saldo > 0) {
+                    System.out.println("Um depósito no valor de R$ " + valor + " foi feito com sucesso!");
+                    this.saldo.set(usuario, deposito);
+                    depositado = true;
+                } else {
+                    System.out.println(" informe um número válido");
+                }
+            } catch (NumberFormatException e){
+                System.out.println("Entrada inválida! Digite um numero");
             }
         } while (!depositado);
 

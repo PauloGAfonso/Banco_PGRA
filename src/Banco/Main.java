@@ -52,6 +52,7 @@ public class Main {
                         break;
                     case 3:
                         System.out.println("Você escolheu sair...");
+                        System.out.println("Obrigado por usar o banco PGRA");
                         System.exit(1);
                         running = false;
                         break;
@@ -113,7 +114,7 @@ public class Main {
 
         } while (running);
 
-        System.out.println("Obrigado por usar o banco PGRA");
+        
 
         leitor.close();
     }
